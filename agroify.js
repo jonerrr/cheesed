@@ -4,14 +4,23 @@ const { createCanvas, loadImage } = require("canvas");
 
 exports.makeFile = async (message) => {
   try {
+    let extension;
     const imageLink = message.content.split(" ")[1];
-    if (!imageLink.endsWith(".png")) return false;
-    if (fs.readdirSync("./images").includes(`${message.author.id}.png`))
+
+    if (imageLink.endsWith(".png")) {
+      extension = "png";
+    } else if (imageLink.endsWith(".jpg") || imageLink.endsWith(".jpeg")) {
+      extension = "jpeg";
+    }
+
+    if (
+      fs.readdirSync("./images").includes(`${message.author.id}.${extension}`)
+    )
       return false;
 
     try {
       fs.writeFileSync(
-        `./images/${message.author.id}.png`,
+        `./images/${message.author.id}.${extension}`,
         await download(imageLink)
       );
     } catch (error) {
@@ -23,8 +32,11 @@ exports.makeFile = async (message) => {
     const canvas = createCanvas(1920, 1080);
     const ctx = canvas.getContext("2d");
 
-    const userImage = await loadImage(`./images/${message.author.id}.png`);
+    const userImage = await loadImage(
+      `./images/${message.author.id}.${extension}`
+    );
     const agroImage = await loadImage("./agromc/agromc.png");
+
     ctx.font = "100px Comic Sans MS";
     ctx.fillStyle = "#FF0000";
     ctx.drawImage(userImage, 0, 0, 1920, 1080);
@@ -32,14 +44,17 @@ exports.makeFile = async (message) => {
     ctx.fillText("THIS IS SO SAD", 600, 800);
     ctx.fillText("CAN WE GET 7 LIKES??", 600, 1000);
 
-    const buffer = canvas.toBuffer("image/png");
-    fs.writeFileSync(`./editedImages/${message.author.id}.png`, buffer);
+    const buffer = canvas.toBuffer(`image/${extension}`);
+    fs.writeFileSync(
+      `./editedImages/${message.author.id}.${extension}`,
+      buffer
+    );
     await message.reply("**AGROIFIED.**", {
-      files: [`./editedImages/${message.author.id}.png`],
+      files: [`./editedImages/${message.author.id}.${extension}`],
     });
 
-    fs.unlinkSync(`./images/${message.author.id}.png`);
-    fs.unlinkSync(`./editedImages/${message.author.id}.png`);
+    fs.unlinkSync(`./images/${message.author.id}.${extension}`);
+    fs.unlinkSync(`./editedImages/${message.author.id}.${extension}`);
   } catch (error) {
     console.log(error);
   }

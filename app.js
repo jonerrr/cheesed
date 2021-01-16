@@ -56,7 +56,7 @@ client.on("message", function (message) {
 client.on("message", function (message) {
   if (message.content.startsWith("agroify")) return agroify.makeFile(message);
   if (message.author.bot) return;
-  if (whitelistedId(message.author.id)) return;
+  // if (whitelistedId(message.author.id)) return;
   if (message.content.includes("your") || message.content.includes("ur")) {
     message.reply(gifs);
   } else if (message.content.includes(":emoji")) {
