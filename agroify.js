@@ -2,26 +2,28 @@ const download = require("download");
 const fs = require("fs");
 const { createCanvas, loadImage } = require("canvas");
 
-exports.makeFile = async (msg) => {
+exports.makeFile = async (message) => {
   try {
-    const imageLink = msg.content.split(" ")[1];
+    const imageLink = message.content.split(" ")[1];
     if (!imageLink.endsWith(".png")) return false;
-    if (fs.readdirSync("./images").includes(`${msg.author.id}.png`))
+    if (fs.readdirSync("./images").includes(`${message.author.id}.png`))
       return false;
 
     try {
       fs.writeFileSync(
-        `./images/${msg.author.id}.png`,
+        `./images/${message.author.id}.png`,
         await download(imageLink)
       );
     } catch (error) {
-      msg.reply("The link you sent was bad lmao. get a better link or else.");
+      message.reply(
+        "The link you sent was bad lmao. get a better link or else."
+      );
     }
 
     const canvas = createCanvas(1920, 1080);
     const ctx = canvas.getContext("2d");
 
-    const userImage = await loadImage(`./images/${msg.author.id}.png`);
+    const userImage = await loadImage(`./images/${message.author.id}.png`);
     const agroImage = await loadImage("./agromc/agromc.png");
     ctx.font = "100px Comic Sans MS";
     ctx.fillStyle = "#FF0000";
@@ -31,14 +33,13 @@ exports.makeFile = async (msg) => {
     ctx.fillText("CAN WE GET 7 LIKES??", 600, 1000);
 
     const buffer = canvas.toBuffer("image/png");
-    fs.writeFileSync(`./editedImages/${msg.author.id}.png`, buffer);
-
-    await msg.reply("**AGROIFIED.**", {
-      files: [`./editedImages/${msg.author.id}.png`],
+    fs.writeFileSync(`./editedImages/${message.author.id}.png`, buffer);
+    await message.reply("**AGROIFIED.**", {
+      files: [`./editedImages/${message.author.id}.png`],
     });
 
-    fs.unlinkSync(`./images/${msg.author.id}.png`);
-    fs.unlinkSync(`./editedImages/${msg.author.id}.png`);
+    fs.unlinkSync(`./images/${message.author.id}.png`);
+    fs.unlinkSync(`./editedImages/${message.author.id}.png`);
   } catch (error) {
     console.log(error);
   }

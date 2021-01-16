@@ -3,12 +3,12 @@ const client = new Discord.Client();
 const config = require("./config.json");
 const agroify = require("./agroify");
 const prefix = "!";
-const user = "345035034769752075";
+const user = config.USER_TO_KICK;
 const gifs =
   "<:emoji:735308015607218279><:emoji:735308015607218279><:emoji:735308015607218279><:emoji:735308015607218279> https://tenor.com/view/youre-your-dumb-gif-18219705 https://tenor.com/view/youre-gif-18325368 https://cdn.discordapp.com/attachments/735022070286778408/758908583840317460/caption.gif https://cdn.discordapp.com/attachments/735022070286778408/758908603507408906/caption.gif";
 
 const whitelistedId = async (authorId) => {
-  const whitelistedIds = [""];
+  const whitelistedIds = ["738605862872023048"];
   if (whitelistedIds.includes(authorId)) return true;
 
   return false;
@@ -35,7 +35,7 @@ client.on("message", function (message) {
   const command = args.shift().toLowerCase();
   const member = message.guild.members.cache.get(user);
   if (command === "cheese") {
-    if (member) {
+    if (member && member.kickable) {
       member.kick("GET CHEESED TROLOLOL");
       message.reply(
         "CHEESED TROLOLOLOLOL <:emoji:735308015607218279> https://media.discordapp.net/attachments/735022070286778408/760201509702729768/caption.gif"
@@ -44,6 +44,8 @@ client.on("message", function (message) {
     } else if (!member) {
       message.reply("HE IS NOT IN THE SERVER ANYMORE 😭😭😭");
       console.log(`cheddar has been cheesed (unsuccessful)`);
+    } else if (!member.kickable) {
+      message.reply("I DONT HAVE PERMS TO KICK HIM !!! 😭😭😭");
     } else {
       message.reply("I COULDNT FREAKING KICK HIM WTF???");
       console.log(`cheddar has been cheesed (unsuccessful)`);
@@ -52,16 +54,15 @@ client.on("message", function (message) {
 });
 
 client.on("message", function (message) {
-  const commandBody = message.content;
-  const args = commandBody;
-  const command = args.toLowerCase();
   if (message.content.startsWith("agroify")) return agroify.makeFile(message);
   if (message.author.bot) return;
-  //  if (whitelistedId(message.author.id)) return;
-  //  if (message.author.id === 738605862872023048) return;
-  if (command === "your" || command === "ur") {
+  if (whitelistedId(message.author.id)) return;
+  if (message.content.includes("your") || message.content.includes("ur")) {
     message.reply(gifs);
+  } else if (message.content.includes(":emoji")) {
+    message.channel.send("<:emoji:735308016789749831>:");
+  } else if (message.content.includes("jelly")) {
+    message.channel.send("🌮");
   }
 });
-
 client.login(config.BOT_TOKEN);
