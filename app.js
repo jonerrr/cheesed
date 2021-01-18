@@ -4,6 +4,7 @@ const config = require("./config.json");
 const agroify = require("./agroify");
 const prefix = "!";
 const user = config.USER_TO_KICK;
+const user2 = config.USER_TO_KICK2;
 const gifs =
   "<:emoji:735308015607218279><:emoji:735308015607218279><:emoji:735308015607218279><:emoji:735308015607218279> https://tenor.com/view/youre-your-dumb-gif-18219705 https://tenor.com/view/youre-gif-18325368 https://cdn.discordapp.com/attachments/735022070286778408/758908583840317460/caption.gif https://cdn.discordapp.com/attachments/735022070286778408/758908603507408906/caption.gif";
 
@@ -34,6 +35,7 @@ client.on("message", function (message) {
   const args = commandBody.split(" ");
   const command = args.shift().toLowerCase();
   const member = message.guild.members.cache.get(user);
+  const member2 = message.guild.members.cache.get(user2);
   if (command === "cheese") {
     if (member && member.kickable) {
       member.kick("GET CHEESED TROLOLOL");
@@ -49,6 +51,23 @@ client.on("message", function (message) {
     } else {
       message.reply("I COULDNT FREAKING KICK HIM WTF???");
       console.log(`cheddar has been cheesed (unsuccessful)`);
+    }
+  }
+  if (command === "catfish") {
+    if (member2 && member2.kickable) {
+      member2.kick("GET CHEESED TROLOLOL");
+      message.reply(
+        "https://cdn.discordapp.com/attachments/625062074245971979/800532282372653086/unknown.png"
+      );
+      console.log(`herb has been cheesed (successful)`);
+    } else if (!member2) {
+      message.reply("HE IS NOT IN THE SERVER ANYMORE 😭😭😭");
+      console.log(`herb has been cheesed (unsuccessful)`);
+    } else if (!member2.kickable) {
+      message.reply("I DONT HAVE PERMS TO KICK her !!! 😭😭😭");
+    } else {
+      message.reply("I COULDNT FREAKING KICK her WTF???");
+      console.log(`herb has been cheesed (unsuccessful)`);
     }
   }
 });
