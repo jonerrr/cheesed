@@ -12,6 +12,8 @@
     "canvas": "^2.6.1",
     "discord.js": "^12.5.1",
     "download": "^8.0.0",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "mineflayer": "^2.40.1",
+    "nodemon": "^2.0.7"
   }
 }
