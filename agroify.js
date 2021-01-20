@@ -1,3 +1,4 @@
+//credit to sully for making this
 const download = require("download");
 const fs = require("fs");
 const { createCanvas, loadImage } = require("canvas");

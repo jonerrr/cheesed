@@ -1,1 +1,11 @@
-{ "BOT_TOKEN": "bottokenasdasdasd" }
+{
+  "BOT_TOKEN": "nah",
+  "USER_TO_KICK": "345035034769752075",
+  "USER_TO_KICK2": "574446978549809154",
+  "SERVER": "mc.hypixel.net",
+  "PORT": "25565",
+  "USERNAME": "nope@gmail.com",
+  "PASSWORD": "bigchungus",
+  "VERSION": false,
+  "AUTH": "mojang"
+}
