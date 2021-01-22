@@ -1,11 +1,60 @@
 {
-  "BOT_TOKEN": "nah",
-  "USER_TO_KICK": "345035034769752075",
-  "USER_TO_KICK2": "574446978549809154",
-  "SERVER": "mc.hypixel.net",
-  "PORT": "25565",
-  "USERNAME": "nope@gmail.com",
-  "PASSWORD": "bigchungus",
-  "VERSION": false,
-  "AUTH": "mojang"
+  "idsToKick": {
+    "ids": ["345035034769752075", "574446978549809154"]
+  },
+  "minecraft": {
+    "email": "fart@gmail.com",
+    "password": "fart",
+    "server": "mc.hypixel.net",
+    "port": "25565",
+    "version": false,
+    "auth": "mojang",
+    "usernameToKick": "CaptainCheddar"
+  },
+  "bot": {
+    "token": "fart",
+    "prefix": "!",
+    "yourResponse": [
+      "https://tenor.com/view/youre-your-dumb-gif-18219705",
+      "https://tenor.com/view/youre-gif-18325368",
+      "https://cdn.discordapp.com/attachments/735022070286778408/758908583840317460/caption.gif",
+      "https://cdn.discordapp.com/attachments/735022070286778408/758908603507408906/caption.gif"
+    ],
+    "susResponse": [
+      "https://tenor.com/view/sus-af-suspect-digibyte-dgb-among-us-gif-19018243",
+      "https://c.tenor.com/G7_ZnrvY1uEAAAAM/among-us-sus-life.gif",
+      "https://images-ext-2.discordapp.net/external/ebEmKeaaUTJN3q2z4ZnI-Eq6qxtN-eaWrO72XWAzY3g/https/images-ext-1.discordapp.net/external/lYk71LSokUiMPuNyiehGtbAGBqbTjKDVGXA2eXsPmYI/https/media.discordapp.net/attachments/767717042455183400/795067332237066290/image0-33.gif",
+      "https://tenor.com/view/imposter-voted-out-among-us-meme-funny-gif-18762855",
+      "https://tenor.com/view/when-the-imposter-is-delicious-sus-lol-funny-chungus-reddit-gif-19537595",
+      "https://tenor.com/view/when-the-imposter-is-thick-thick-imposter-imposter-among-us-gif-19545670",
+      "https://tenor.com/view/when-the-imposter-is-sus-jerma-among-us-jerma985-bruh-gif-19334168",
+      "https://tenor.com/view/saiouma-yaoi-fujoshi-bakudeku-danganronpa-gif-19410731",
+      "https://tenor.com/view/imposter-among-us-when-imposter-is-sus-russ-p-sus-gif-19938679",
+      "https://tenor.com/view/among-us-red-sus-red-sus-lol-among-sus-sus-mobile-gif-19658545",
+      "https://tenor.com/view/when-the-imposter-is-sus-sus-among-us-among-us-gif-19602937",
+      "https://tenor.com/view/among-us-red-is-sus-imposter-imposter-is-sus-among-us-meme-gif-19613832"
+    ],
+    "ruleResponse": [
+      "https://media.discordapp.net/attachments/711831006541250562/718949524839596152/image0.gif",
+      "https://tenor.com/view/do-not-ping-staff-no-reason-discord-discord-rules-gif-17679038",
+      "https://media.discordapp.net/attachments/532499057701158937/717993570136490004/image0_1.gif",
+      "https://media.discordapp.net/attachments/701382696525496371/717321778052988958/NoAnime.gif",
+      "https://images-ext-2.discordapp.net/external/_kJ67hRrlQI5zcpE72SsVJEfSwdU7CPIeRBmvKgLADM/https/media.discordapp.net/attachments/318013465652494336/736854047683903509/rule_6.gif",
+      "https://media.discordapp.net/attachments/318013465652494336/736852574740676648/rule_3.gif",
+      "https://cdn.discordapp.com/attachments/735304499807387658/737555996360310924/image0.gif",
+      "https://cdn.discordapp.com/attachments/735304499807387658/741802787074998392/rule_2.gif",
+      "https://tenor.com/view/follow-the-discord-tos-fatty-spins-doin-your-mom-boys-cool-gif-17892627",
+      "https://tenor.com/view/duck-cute-pet-no-spamming-spamming-gif-16946494",
+      "https://tenor.com/view/dont-be-toxic-grope-muscle-flex-gif-17645335",
+      "https://cdn.discordapp.com/attachments/735304499807387658/744204706359935107/gifgit.gif",
+      "https://tenor.com/view/buff-guy-strong-strong-man-rule13-13do-not-disagree-with-admins-or-they-will-ban-you-gif-18069308",
+      "https://media.discordapp.net/attachments/724009203072761876/747522049618083951/image0.gif",
+      "https://tenor.com/view/discord-server-rules-mods-gif-18155344",
+      "https://cdn.discordapp.com/attachments/630300664337137674/753637339225653248/image0.gif",
+      "https://cdn.discordapp.com/attachments/667167861977907230/720037556074578061/image0.gif",
+      "https://tenor.com/view/big-man-rule-body-building-muscles-deleting-cum-quotes-will-lead-to-a-warning-gif-17917719",
+      "https://tenor.com/view/no-spamming-cooking-booty-gif-17810326",
+      "https://tenor.com/view/no-spamming-sea-gull-hotdog-eating-gif-17426772"
+    ]
+  }
 }

@@ -44,6 +44,8 @@ exports.makeFile = async (message) => {
     ctx.drawImage(agroImage, 0, 600, 500, 500);
     ctx.fillText("THIS IS SO SAD", 600, 800);
     ctx.fillText("CAN WE GET 7 LIKES??", 600, 1000);
+    ctx.fillStyle = "#7FFF00";
+    ctx.fillText("CODED BY SULLY", 700, 200);
 
     const buffer = canvas.toBuffer(`image/${extension}`);
     fs.writeFileSync(
