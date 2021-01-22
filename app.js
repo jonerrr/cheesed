@@ -81,7 +81,7 @@ client.on("message", function (message) {
       if (memberToKick && memberToKick.kickable) {
         if (count === true) {
           cheeseTotal.total++;
-          writeToDB(cheeseTotal);
+          writeToDB();
           console.log(`cheddar has been cheesed (successful) ${db.total}`);
         } else if (count === false) {
           console.log("counting was false");
