@@ -171,11 +171,9 @@ client.on("message", function (message) {
 client.on("message", function (message) {
   if (message.author.bot) return;
   if (message.content.startsWith("agroify")) return agroify.makeFile(message);
-  function wordResponse(word, reply) {
-    if (
-      message.content.toLowerCase().includes(word) &&
-      !db.whitelistedServerIds
-    ) {
+    function wordResponse(word, reply) {
+    const isInArray = db.whitelistedServerIds.includes(message.guild.id);
+    if (message.content.toLowerCase().includes(word) && isInArray === false) {
       //  message.channel.send(config.bot.yourResponse[0]);
       message.channel.send(reply[rand(0, reply.length)]);
     }
