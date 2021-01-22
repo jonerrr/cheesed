@@ -8,22 +8,24 @@ const fs = require("fs");
 const cheeseTotal = {
   total: db.total,
   whitelistedServerIds: db.whitelistedServerIds,
+  badPerson: db.badPerson,
+  badPersonCount: db.badPersonCount,
 };
 
-setTimeout(function () {
-  writeToDB();
-  console.log("written to db");
-}, 5000);
+// setTimeout(function () {
+//   writeToDB();
+//   console.log("written to db");
+// }, 5000);
 
-const bot = mineflayer.createBot({
-  host: config.minecraftAccount.server,
-  port: config.minecraftAccount.port,
-  username: config.minecraftAccount.email,
-  password: config.minecraftAccount.password,
-  version: config.minecraftAccount.version,
-  auth: config.minecraftAccount.auth,
-  version: config.minecraftAccount.version,
-});
+// const bot = mineflayer.createBot({
+//   host: config.minecraftAccount.server,
+//   port: config.minecraftAccount.port,
+//   username: config.minecraftAccount.email,
+//   password: config.minecraftAccount.password,
+//   version: config.minecraftAccount.version,
+//   auth: config.minecraftAccount.auth,
+//   version: config.minecraftAccount.version,
+// });
 
 function rand(min, max) {
   let randomNum = Math.random() * (max - min) + min;
@@ -46,7 +48,7 @@ function writeToDB() {
 function readFromDB() {
   let data = fs.readFileSync("./db.json");
   let obj = JSON.parse(data);
-  return obj.total;
+  return obj;
 }
 
 const whitelistedId = async (authorId) => {
@@ -134,6 +136,12 @@ client.on("message", function (message) {
         {
           name: "!unblacklistserver",
           value: "does opposite of last command",
+        },
+        {
+          name: "Bot invite",
+          value:
+            "[click here](https://discord.com/api/oauth2/authorize?client_id=758542490218790912&permissions=379907&scope=bot)",
+          inline: true,
         }
       )
       .setFooter(
@@ -165,16 +173,41 @@ client.on("message", function (message) {
   } else if (command === "cheesg") {
     cheeseGuild();
     message.channel.send("<:emoji:735308015607218279>");
+  } else if (command === "n" || command === "nword") {
+    const personTagged = message.mentions.members.first().id;
+    if (personTagged) {
+      if (db[personTagged] === undefined || db[personTagged] === 0) {
+        message.channel.send(
+          `<@${personTagged}> has not said the nword yet 😎`
+        );
+      } else {
+        message.channel.send(
+          `<@${personTagged}> said the nword ${db[personTagged]} times 🙀🙀`
+        );
+      }
+    } else if (!personTagged) {
+      message.channel.send(
+        `You said the nword ${db[message.author.id]} times 🙀🙀`
+      );
+    }
+  } else if (command === "lb") {
+    // const lb = cheeseTotal;
+    // lb.sort(function (a, b) {
+    //   if (a > b) return 1;
+    //   if (a < b) return -1;
+    //   return 0;
+    // });
+    // message.channel.send(`top nwords ${lb}`);
+    console.log("doesnt wokr yet");
   }
 });
 
 client.on("message", function (message) {
   if (message.author.bot) return;
   if (message.content.startsWith("agroify")) return agroify.makeFile(message);
- function wordResponse(word, reply) {
+  function wordResponse(word, reply) {
     const isInArray = db.whitelistedServerIds.includes(message.guild.id);
     if (message.content.toLowerCase().includes(word) && isInArray === false) {
-      //  message.channel.send(config.bot.yourResponse[0]);
       message.channel.send(reply[rand(0, reply.length)]);
     }
   }
@@ -219,6 +252,30 @@ client.on("message", function (message) {
       ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠌⠄⠑⠩⢈⢂⣱⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
       ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡀⢄⠄⣀⠄⡀⣀⢠⢄⣖⣖⣞⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿`,
   ]);
+  if (
+    message.content.toLowerCase().includes("nigga") ||
+    message.content.toLowerCase().includes("nigger")
+  ) {
+    const person = message.author.id;
+    const find = cheeseTotal[person];
+    console.log(find);
+    if (!find || find === undefined) {
+      let nwordCount = 0;
+      nwordCount++;
+      cheeseTotal[person] = nwordCount;
+      writeToDB();
+      //const nwordTotal = readFromDB();
+      //   message.channel.send(`${nwordTotal[person]} cum`);
+    } else {
+      let nwordCount = cheeseTotal[person];
+      nwordCount++;
+      cheeseTotal[person] = nwordCount;
+      writeToDB();
+      //const nwordTotal = readFromDB();
+      console.log(nwordCount, "fart");
+      //   message.channel.send(`${nwordTotal[person]} balls`);
+    }
+  }
 });
 
 client.login(config.bot.token);
