@@ -171,7 +171,7 @@ client.on("message", function (message) {
 client.on("message", function (message) {
   if (message.author.bot) return;
   if (message.content.startsWith("agroify")) return agroify.makeFile(message);
-    function wordResponse(word, reply) {
+ function wordResponse(word, reply) {
     const isInArray = db.whitelistedServerIds.includes(message.guild.id);
     if (message.content.toLowerCase().includes(word) && isInArray === false) {
       //  message.channel.send(config.bot.yourResponse[0]);
@@ -182,8 +182,10 @@ client.on("message", function (message) {
   //wordResponse("ur", config.bot.yourResponse);
   wordResponse("sus", config.bot.susResponse);
   wordResponse("rule", config.bot.ruleResponse);
+  wordResponse("🌮", ["🌮"]);
+  wordResponse(":emoji", ["<:emoji:735308018320932905>"]);
   wordResponse("obama", [
-     `⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⠛⠛⠉⠉⠉⠋⠛⠛⠛⠻⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+    ` ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⠛⠛⠉⠉⠉⠋⠛⠛⠛⠻⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
       ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠛⠉⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠉⠙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
       ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿
       ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠏⠄⠄⠄⠄⠄⠄⠄⠂⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠹⣿⣿⣿⣿⣿⣿⣿
