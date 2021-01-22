@@ -15,15 +15,15 @@ setTimeout(function () {
   console.log("written to db");
 }, 5000);
 
-const bot = mineflayer.createBot({
-  host: config.minecraftAccount.server,
-  port: config.minecraftAccount.port,
-  username: config.minecraftAccount.email,
-  password: config.minecraftAccount.password,
-  version: config.minecraftAccount.version,
-  auth: config.minecraftAccount.auth,
-  version: config.minecraftAccount.version,
-});
+// const bot = mineflayer.createBot({
+//   host: config.minecraftAccount.server,
+//   port: config.minecraftAccount.port,
+//   username: config.minecraftAccount.email,
+//   password: config.minecraftAccount.password,
+//   version: config.minecraftAccount.version,
+//   auth: config.minecraftAccount.auth,
+//   version: config.minecraftAccount.version,
+// });
 
 function rand(min, max) {
   let randomNum = Math.random() * (max - min) + min;
@@ -81,7 +81,7 @@ client.on("message", function (message) {
       if (memberToKick && memberToKick.kickable) {
         if (count === true) {
           cheeseTotal.total++;
-          writeToDB(cheeseTotal);
+          writeToDB();
           console.log(`cheddar has been cheesed (successful) ${db.total}`);
         } else if (count === false) {
           console.log("counting was false");
@@ -172,10 +172,8 @@ client.on("message", function (message) {
   if (message.author.bot) return;
   if (message.content.startsWith("agroify")) return agroify.makeFile(message);
   function wordResponse(word, reply) {
-    if (
-      message.content.toLowerCase().includes(word) &&
-      !db.whitelistedServerIds
-    ) {
+    const isInArray = db.whitelistedServerIds.includes(message.guild.id);
+    if (message.content.toLowerCase().includes(word) && isInArray === false) {
       //  message.channel.send(config.bot.yourResponse[0]);
       message.channel.send(reply[rand(0, reply.length)]);
     }
@@ -184,8 +182,10 @@ client.on("message", function (message) {
   //wordResponse("ur", config.bot.yourResponse);
   wordResponse("sus", config.bot.susResponse);
   wordResponse("rule", config.bot.ruleResponse);
+  wordResponse("🌮", ["🌮"]);
+  wordResponse(":emoji", ["<:emoji:735308018320932905>"]);
   wordResponse("obama", [
-     `⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⠛⠛⠉⠉⠉⠋⠛⠛⠛⠻⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+    `⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⠛⠛⠉⠉⠉⠋⠛⠛⠛⠻⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
       ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠛⠉⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠉⠙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
       ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿
       ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠏⠄⠄⠄⠄⠄⠄⠄⠂⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠹⣿⣿⣿⣿⣿⣿⣿
