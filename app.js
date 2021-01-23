@@ -5,18 +5,13 @@ const db = require("./db.json");
 const agroify = require("./agroify");
 const mineflayer = require("mineflayer");
 const fs = require("fs");
+const { DH_CHECK_P_NOT_SAFE_PRIME } = require("constants");
 const cheeseTotal = {
   total: db.total,
   whitelistedServerIds: db.whitelistedServerIds,
-  badPerson: db.badPerson,
-  badPersonCount: db.badPersonCount,
+  badPeople: db.badPeople,
 };
-
-// setTimeout(function () {
-//   writeToDB();
-//   console.log("written to db");
-// }, 5000);
-
+//lol im not using a database too lazy
 // const bot = mineflayer.createBot({
 //   host: config.minecraftAccount.server,
 //   port: config.minecraftAccount.port,
@@ -51,12 +46,12 @@ function readFromDB() {
   return obj;
 }
 
-const whitelistedId = async (authorId) => {
-  const whitelistedIds = config.bot.whitelistedIds;
-  if (whitelistedIds.includes(authorId)) return true;
+// const whitelistedId = async (authorId) => {
+//   const whitelistedIds = config.bot.whitelistedIds;
+//   if (whitelistedIds.includes(authorId)) return true;
 
-  return false;
-};
+//   return false;
+// };
 
 client.on("ready", () => {
   console.log(`logged in as ${client.user.tag}`);
@@ -138,6 +133,14 @@ client.on("message", function (message) {
           value: "does opposite of last command",
         },
         {
+          name: "!n <@person>",
+          value: "tells you amount of nwords the person said",
+        },
+        {
+          name: "!lb",
+          value: "nword leaderboard",
+        },
+        {
           name: "Bot invite",
           value:
             "[click here](https://discord.com/api/oauth2/authorize?client_id=758542490218790912&permissions=379907&scope=bot)",
@@ -174,31 +177,61 @@ client.on("message", function (message) {
     cheeseGuild();
     message.channel.send("<:emoji:735308015607218279>");
   } else if (command === "n" || command === "nword") {
-    const personTagged = message.mentions.members.first().id;
-    if (personTagged) {
-      if (db[personTagged] === undefined || db[personTagged] === 0) {
-        message.channel.send(
-          `<@${personTagged}> has not said the nword yet 😎`
-        );
-      } else {
-        message.channel.send(
-          `<@${personTagged}> said the nword ${db[personTagged]} times 🙀🙀`
-        );
+    try {
+      const lol = readFromDB();
+      const personTagged = message.mentions.members.first().id;
+      const id = message.author.id;
+      if (personTagged) {
+        if (
+          lol.badPeople[personTagged] === undefined ||
+          lol.badPeople[personTagged] === 0
+        ) {
+          message.channel.send(
+            `<@${personTagged}> has not said the nword yet 😎`
+          );
+        } else if (
+          lol.badPeople[personTagged] !== undefined ||
+          lol.badPeople[personTagged] !== 0
+        ) {
+          message.channel.send(
+            `<@${personTagged}> said the nword ${db.badPeople[personTagged]} times 🙀🙀`
+          );
+        }
       }
-    } else if (!personTagged) {
-      message.channel.send(
-        `You said the nword ${db[message.author.id]} times 🙀🙀`
-      );
+    } catch (error) {
+      message.channel.send("stopped stupid fucking shit from crashing bot");
+      console.log("error with event trolol");
     }
   } else if (command === "lb") {
-    // const lb = cheeseTotal;
-    // lb.sort(function (a, b) {
-    //   if (a > b) return 1;
-    //   if (a < b) return -1;
-    //   return 0;
-    // });
-    // message.channel.send(`top nwords ${lb}`);
-    console.log("doesnt wokr yet");
+    const cheeseArrayNumbers = Object.values(cheeseTotal.badPeople);
+    //console.log(cheeseArrayIds, cheeseArrayNumbers);
+    const test = cheeseArrayNumbers.sort(function (a, b) {
+      return b - a;
+    });
+    const lbEmbed = new Discord.MessageEmbed()
+      .setColor("#FFDC00")
+      .setTitle("top 10 racisms 🙀🙀😼🙀😼")
+      .setThumbnail(
+        "https://cdn.discordapp.com/avatars/801873143437983754/7d247a3dfdbe79817391c6d62d135ee7.png?size=256"
+      )
+      .addFields(
+        { name: `1`, value: `${test[0]}` },
+        { name: `2`, value: `${test[1]}` },
+        { name: `3`, value: `${test[2]}` },
+        { name: `4`, value: `${test[3]}` },
+        { name: `5`, value: `${test[4]}` },
+        { name: `6`, value: `${test[5]}` },
+        { name: `7`, value: `${test[6]}` },
+        { name: `8`, value: `${test[7]}` },
+        { name: `9`, value: `${test[8]}` },
+        { name: `10`, value: `${test[9]}` }
+      )
+      .setFooter(
+        "made by jonah",
+        "https://cdn.discordapp.com/avatars/738605862872023048/a751915cef7f8e6b8e84fc59f141bdc7.png?size=256"
+      );
+    message.channel.send(lbEmbed);
+    //find user id by object value
   }
 });
 
@@ -211,8 +244,8 @@ client.on("message", function (message) {
       message.channel.send(reply[rand(0, reply.length)]);
     }
   }
+
   wordResponse("your", config.bot.yourResponse);
-  //wordResponse("ur", config.bot.yourResponse);
   wordResponse("sus", config.bot.susResponse);
   wordResponse("rule", config.bot.ruleResponse);
   wordResponse("🌮", ["🌮"]);
@@ -257,19 +290,19 @@ client.on("message", function (message) {
     message.content.toLowerCase().includes("nigger")
   ) {
     const person = message.author.id;
-    const find = cheeseTotal[person];
+    const find = cheeseTotal.badPeople[person];
     console.log(find);
     if (!find || find === undefined) {
       let nwordCount = 0;
       nwordCount++;
-      cheeseTotal[person] = nwordCount;
+      cheeseTotal.badPeople[person] = nwordCount;
       writeToDB();
       //const nwordTotal = readFromDB();
       //   message.channel.send(`${nwordTotal[person]} cum`);
     } else {
-      let nwordCount = cheeseTotal[person];
+      let nwordCount = cheeseTotal.badPeople[person];
       nwordCount++;
-      cheeseTotal[person] = nwordCount;
+      cheeseTotal.badPeople[person] = nwordCount;
       writeToDB();
       //const nwordTotal = readFromDB();
       console.log(nwordCount, "fart");
